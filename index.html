@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKPD Interaktif - Pengantar Ilmu Ekonomi</title>
+    <style>
+        :root {
+            --bg: #f0f4ff;
+            --card-bg: #ffffff;
+            --primary: #4f6ef7;
+            --primary-hover: #3b54d4;
+            --accent: #f9a826;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --text: #2c3e50;
+            --text-light: #5a6c7d;
+            --border: #e2e8f0;
+            --shadow: 0 10px 40px rgba(79, 110, 247, 0.08);
+            --shadow-hover: 0 16px 50px rgba(79, 110, 247, 0.15);
+            --radius: 20px;
+            --radius-inner: 14px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #e8f0fe 0%, #f0e6f6 30%, #fce4ec 60%, #e8f5e9 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Dekorasi latar belakang */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -180px;
+            right: -120px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(79, 110, 247, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -160px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(249, 168, 38, 0.10) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 720px;
+            animation: fadeInUp 0.7s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header Card */
+        .header-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #4f6ef7, #7c5cfc, #f9a826);
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #eef1ff;
+            color: #4f6ef7;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .header-card .icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .header-card h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text);
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+
+        .header-card .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Info bar */
+        .info-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 14px;
+        }
+
+        .info-pill {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-pill span {
+            font-size: 1.1rem;
+        }
+
+        /* Soal Card */
+        .soal-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 26px 30px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .soal-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .soal-card .nomor-soal {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #4f6ef7, #6b7ff7);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1rem;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(79, 110, 247, 0.3);
+        }
+
+        .soal-card .pertanyaan {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        /* Opsi */
+        .opsi-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .opsi-label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: var(--radius-inner);
+            cursor: pointer;
+            border: 2px solid var(--border);
+            background: #fafbfc;
+            transition: var(--transition);
+            font-weight: 500;
+            color: var(--text);
+            user-select: none;
+            position: relative;
+        }
+
+        .opsi-label:hover {
+            background: #f1f5ff;
+            border-color: #c4d0fc;
+            transform: translateX(3px);
+        }
+
+        .opsi-label:active {
+            transform: scale(0.985);
+            transition: 0.1s;
+        }
+
+        /* Radio button custom */
+        .radio-custom {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border-radius: 50%;
+            border: 2.5px solid #cbd5e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            background: #fff;
+            flex-shrink: 0;
+        }
+
+        .radio-custom::after {
+            content: '';
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #4f6ef7;
+            transform: scale(0);
+            transition: var(--transition);
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        input[type="radio"]:checked+.radio-custom {
+            border-color: #4f6ef7;
+            background: #eef1ff;
+            box-shadow: 0 0 0 6px rgba(79, 110, 247, 0.1);
+        }
+
+        input[type="radio"]:checked+.radio-custom::after {
+            transform: scale(1);
+        }
+
+        /* Opsi terpilih */
+        .opsi-label:has(input:checked) {
+            border-color: #4f6ef7 !important;
+            background: #f5f7ff !important;
+            font-weight: 700;
+            color: #3b54d4;
+            box-shadow: 0 2px 12px rgba(79, 110, 247, 0.1);
+        }
+
+        /* Tombol */
+        .btn-wrapper {
+            text-align: center;
+            margin-top: 28px;
+        }
+
+        .btn-cek {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #4f6ef7, #5b7bf9);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 28px rgba(79, 110, 247, 0.35);
+            transition: var(--transition);
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-cek::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-cek:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 36px rgba(79, 110, 247, 0.45);
+            background: linear-gradient(135deg, #3b54d4, #4a66e8);
+        }
+
+        .btn-cek:hover::before {
+            left: 100%;
+        }
+
+        .btn-cek:active {
+            transform: scale(0.95);
+            box-shadow: 0 6px 20px rgba(79, 110, 247, 0.35);
+        }
+
+        .btn-icon {
+            font-size: 1.4rem;
+        }
+
+        /* Modal / Popup hasil */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .popup-hasil {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 36px 32px;
+            text-align: center;
+            max-width: 440px;
+            width: 90%;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+            animation: popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 101;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .popup-hasil .emoji-besar {
+            font-size: 5rem;
+            display: block;
+            animation: bounceEmoji 0.6s ease infinite alternate;
+        }
+
+        @keyframes bounceEmoji {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-14px);
+            }
+        }
+
+        .popup-hasil .skor-angka {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #4f6ef7, #f9a826);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .popup-hasil .label-skor {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 600;
+            margin-top: -6px;
+            margin-bottom: 6px;
+        }
+
+        .popup-hasil .pesan {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text);
+            margin: 8px 0 18px;
+        }
+
+        .btn-tutup {
+            padding: 12px 32px;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            background: #f1f5f9;
+            color: var(--text);
+            transition: var(--transition);
+            border: 2px solid var(--border);
+        }
+
+        .btn-tutup:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e0;
+        }
+
+        .btn-ulangi {
+            padding: 12px 32px;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            background: #4f6ef7;
+            color: #fff;
+            transition: var(--transition);
+            margin-left: 8px;
+        }
+
+        .btn-ulangi:hover {
+            background: #3b54d4;
+            box-shadow: 0 6px 18px rgba(79, 110, 247, 0.35);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Progress bar */
+        .progress-bar-outer {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 50px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            border-radius: 50px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-green {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+        }
+        .progress-yellow {
+            background: linear-gradient(90deg, #f9a826, #f7c948);
+        }
+        .progress-red {
+            background: linear-gradient(90deg, #e74c3c, #f0625c);
+        }
+
+        /* Responsif */
+        @media (max-width: 600px) {
+            .header-card {
+                padding: 20px 18px;
+            }
+            .header-card h1 {
+                font-size: 1.35rem;
+            }
+            .soal-card {
+                padding: 18px 16px;
+            }
+            .soal-card .pertanyaan {
+                font-size: 0.95rem;
+            }
+            .opsi-label {
+                padding: 12px 14px;
+                font-size: 0.9rem;
+                gap: 10px;
+            }
+            .btn-cek {
+                padding: 14px 28px;
+                font-size: 1rem;
+            }
+            .popup-hasil {
+                padding: 24px 18px;
+            }
+            .popup-hasil .skor-angka {
+                font-size: 3rem;
+            }
+            .popup-hasil .emoji-besar {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header-card">
+            <span class="icon">📚</span>
+            <span class="badge">LKPD Interaktif</span>
+            <h1>Pengantar Ilmu Ekonomi</h1>
+            <p class="subtitle">Kelas X SMA • Bab 1</p>
+            <div class="info-bar">
+                <div class="info-pill"><span>📝</span> 3 Soal Pilihan Ganda</div>
+                <div class="info-pill"><span>⏱️</span> Estimasi 10 Menit</div>
+                <div class="info-pill"><span>🎯</span> Skor Maks: 100</div>
+            </div>
+        </div>
+
+        <!-- SOAL 1 -->
+        <div class="soal-card" id="soal1-card">
+            <div class="nomor-soal">1</div>
+            <p class="pertanyaan">Ilmu ekonomi adalah ilmu yang mempelajari tentang...</p>
+            <div class="opsi-group">
+                <label class="opsi-label">
+                    <input type="radio" name="soal1" value="a">
+                    <span class="radio-custom"></span>
+                    Cara memperoleh kekayaan sebanyak-banyaknya
+                </label>
+                <label class="opsi-label">
+                    <input type="radio" name="soal1" value="b">
+                    <span class="radio-custom"></span>
+                    Usaha manusia memenuhi kebutuhan tak terbatas dengan alat pemuas yang terbatas
+                </label>
+                <label class="opsi-label">
+                    <input type="radio" name="soal1" value="c">
+                    <span class="radio-custom"></span>
+                    Cara mengatur keuangan negara saja
+                </label>
+                <label class="opsi-label">
+                    <input type="radio" name="soal1" value="d">
+                    <span class="radio-custom"></span>
+                    Cara berdagang yang selalu menguntungkan
+                </label>
+            </div>
+        </div>
+
+        <!-- SOAL 2 -->
+        <div class="soal-card" id="soal2-card">
+            <div class="nomor-soal">2</div>
+            <p class="pertanyaan">Berikut ini yang merupakan <strong>contoh kebutuhan primer</strong> adalah...</p>
+            <div class="opsi-group">
+                <label class="opsi-label">
+                    <input type="radio" name="soal2" value="a">
+                    <span class="radio-custom"></span>
+                    Mobil mewah dan liburan ke luar negeri
+                </label>
+                <label class="opsi-label">
+                    <input type="radio" name="soal2" value="b">
+                    <span class="radio-custom"></span>
+                    Handphone terbaru dan aksesori branded
+                </label>
+                <label class="opsi-label">
+                    <input type="radio" name="soal2" value="c">
+                    <span class="radio-custom"></span>
+                    Makanan bergizi, tempat tinggal, dan pakaian
+                </label>
+                <label class="opsi-label">
+                    <input type="radio" name="soal2" value="d">
+                    <span class="radio-custom"></span>
+                    Menonton film di bioskop setiap minggu
+                </label>
+            </div>
+        </div>
+
+        <!-- SOAL 3 -->
+        <div class="soal-card" id="soal3-card">
+            <div class="nomor-soal">3</div>
+            <p class="pertanyaan"><strong>Biaya peluang</strong> (<em>opportunity cost</em>) dalam ilmu ekonomi adalah...</p>
+            <div class="opsi-group">
+                <label class="opsi-label">
+                    <input type="radio" name="soal3" value="a">
+                    <span class="radio-custom"></span>
+                    Semua biaya yang dikeluarkan untuk membeli barang
+                </label>
+                <label class="opsi-label">
+                    <input type="radio" name="soal3" value="b">
+                    <span class="radio-custom"></span>
+                    Nilai dari alternatif terbaik yang dikorbankan saat membuat pilihan
+                </label>
+                <label class="opsi-label">
+                    <input type="radio" name="soal3" value="c">
+                    <span class="radio-custom"></span>
+                    Total biaya produksi suatu barang di pabrik
+                </label>
+                <label class="opsi-label">
+                    <input type="radio" name="soal3" value="d">
+                    <span class="radio-custom"></span>
+                    Harga barang yang berlaku di pasaran saat itu
+                </label>
+            </div>
+        </div>
+
+        <!-- TOMBOL CEK NILAI -->
+        <div class="btn-wrapper">
+            <button class="btn-cek" id="btnCekNilai" onclick="cekSemuaJawaban()">
+                <span class="btn-icon">✅</span> Cek Nilai
+                <span class="btn-icon">📊</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- OVERLAY POPUP HASIL -->
+    <div class="overlay hidden" id="overlayHasil">
+        <div class="popup-hasil" id="popupHasil">
+            <span class="emoji-besar" id="emojiHasil">🎉</span>
+            <div class="skor-angka" id="skorAngka">0</div>
+            <div class="label-skor">dari 100 poin</div>
+            <div class="progress-bar-outer">
+                <div class="progress-bar-inner" id="progressBar" style="width: 0%;"></div>
+            </div>
+            <p class="pesan" id="pesanHasil">Semangat!</p>
+            <div style="margin-top: 16px;">
+                <button class="btn-tutup" onclick="tutupPopup()">🔙 Tutup</button>
+                <button class="btn-ulangi" onclick="ulangiLKPD()">🔄 Ulangi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Kunci jawaban
+        const kunciJawaban = {
+            soal1: 'b',
+            soal2: 'c',
+            soal3: 'b'
+        };
+
+        /**
+         * Mengecek seluruh jawaban, menghitung skor, dan menampilkan popup hasil.
+         */
+        function cekSemuaJawaban() {
+            let benar = 0;
+            const totalSoal = Object.keys(kunciJawaban).length;
+            const soalBelumDijawab = [];
+
+            // Periksa setiap soal
+            for (let i = 1; i <= totalSoal; i++) {
+                const namaSoal = 'soal' + i;
+                const terpilih = document.querySelector(`input[name="${namaSoal}"]:checked`);
+
+                if (!terpilih) {
+                    // Tandai soal yang belum dijawab
+                    soalBelumDijawab.push(i);
+                    // Sorot card soal yang belum dijawab
+                    const card = document.getElementById(namaSoal + '-card');
+                    if (card) {
+                        card.style.border = '2px solid #e74c3c';
+                        card.style.boxShadow = '0 0 0 4px rgba(231, 76, 60, 0.12)';
+                        // Kembalikan setelah beberapa detik
+                        setTimeout(() => {
+                            card.style.border = '1px solid #e2e8f0';
+                            card.style.boxShadow = '';
+                        }, 2500);
+                    }
+                } else {
+                    if (terpilih.value === kunciJawaban[namaSoal]) {
+                        benar++;
+                    }
+                }
+            }
+
+            // Jika ada soal yang belum dijawab
+            if (soalBelumDijawab.length > 0) {
+                const daftarSoal = soalBelumDijawab.join(', ');
+                // Scroll ke soal pertama yang belum dijawab
+                const cardPertama = document.getElementById('soal' + soalBelumDijawab[0] + '-card');
+                if (cardPertama) {
+                    cardPertama.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                // Tampilkan notifikasi kecil
+                tampilkanNotifikasi(
+                    `⚠️ Mohon lengkapi Soal Nomor ${daftarSoal} terlebih dahulu ya!`,
+                    'warning'
+                );
+                return;
+            }
+
+            // Hitung skor (0-100)
+            const skor = Math.round((benar / totalSoal) * 100);
+
+            // Tampilkan popup hasil
+            tampilkanPopup(skor, benar, totalSoal);
+
+            // Smooth scroll ke atas
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /**
+         * Menampilkan popup hasil dengan animasi.
+         */
+        function tampilkanPopup(skor, benar, total) {
+            const overlay = document.getElementById('overlayHasil');
+            const emoji = document.getElementById('emojiHasil');
+            const skorAngka = document.getElementById('skorAngka');
+            const pesan = document.getElementById('pesanHasil');
+            const progressBar = document.getElementById('progressBar');
+
+            // Tentukan emoji, pesan, dan warna progress bar
+            let emojiText, pesanText, progressClass;
+
+            if (skor === 100) {
+                emojiText = '🏆';
+                pesanText = 'Sempurna! Kamu luar biasa! 🌟';
+                progressClass = 'progress-green';
+            } else if (skor >= 67) {
+                emojiText = '😊';
+                pesanText = 'Bagus! Tingkatkan lagi ya! 💪';
+                progressClass = 'progress-green';
+            } else if (skor >= 34) {
+                emojiText = '🤔';
+                pesanText = 'Lumayan, tapi masih perlu belajar lagi ya! 📖';
+                progressClass = 'progress-yellow';
+            } else {
+                emojiText = '📚';
+                pesanText = 'Jangan menyerah! Yuk pelajari lagi materinya! 🔄';
+                progressClass = 'progress-red';
+            }
+
+            // Reset animasi emoji
+            emoji.style.animation = 'none';
+            emoji.offsetHeight; // trigger reflow
+            emoji.style.animation = 'bounceEmoji 0.6s ease infinite alternate';
+            emoji.textContent = emojiText;
+
+            // Animasi angka skor
+            skorAngka.textContent = '0';
+            animateAngka(skorAngka, 0, skor, 800);
+
+            // Progress bar
+            progressBar.className = 'progress-bar-inner ' + progressClass;
+            setTimeout(() => {
+                progressBar.style.width = skor + '%';
+            }, 150);
+
+            pesan.textContent = pesanText;
+
+            // Tampilkan overlay
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        /**
+         * Animasi counter angka.
+         */
+        function animateAngka(element, start, end, duration) {
+            const range = end - start;
+            const increment = range > 0 ? 1 : -1;
+            const stepTime = Math.abs(Math.floor(duration / range));
+            let current = start;
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = current;
+                if (current === end) {
+                    clearInterval(timer);
+                }
+            }, stepTime || 16);
+        }
+
+        /**
+         * Menutup popup hasil.
+         */
+        function tutupPopup() {
+            const overlay = document.getElementById('overlayHasil');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        /**
+         * Mengulangi LKPD - reset semua pilihan dan tutup popup.
+         */
+        function ulangiLKPD() {
+            // Reset semua radio button
+            const semuaRadio = document.querySelectorAll('input[type="radio"]');
+            semuaRadio.forEach(radio => {
+                radio.checked = false;
+            });
+
+            // Reset border semua soal card
+            for (let i = 1; i <= 3; i++) {
+                const card = document.getElementById('soal' + i + '-card');
+                if (card) {
+                    card.style.border = '1px solid #e2e8f0';
+                    card.style.boxShadow = '';
+                }
+            }
+
+            // Reset progress bar
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = '0%';
+            progressBar.className = 'progress-bar-inner';
+
+            // Tutup popup
+            tutupPopup();
+
+            // Scroll ke atas
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /**
+         * Notifikasi kecil sementara (toast-like).
+         */
+        function tampilkanNotifikasi(pesan, tipe) {
+            // Hapus notifikasi lama jika ada
+            const notifLama = document.getElementById('notifikasiSementara');
+            if (notifLama) notifLama.remove();
+
+            const notif = document.createElement('div');
+            notif.id = 'notifikasiSementara';
+            notif.textContent = pesan;
+            notif.style.cssText = `
+                        position: fixed;
+                        bottom: 30px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: ${tipe === 'warning' ? '#fff3cd' : '#f8d7da'};
+                        color: #856404;
+                        border: 2px solid ${tipe === 'warning' ? '#ffc107' : '#e74c3c'};
+                        padding: 14px 24px;
+                        border-radius: 50px;
+                        font-weight: 700;
+                        font-size: 0.95rem;
+                        z-index: 200;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+                        animation: fadeInUp 0.4s ease, fadeOut 0.4s ease 2.2s forwards;
+                        text-align: center;
+                        max-width: 90vw;
+                    `;
+            document.body.appendChild(notif);
+
+            // Hapus setelah 2.6 detik
+            setTimeout(() => {
+                if (notif.parentNode) notif.remove();
+            }, 2600);
+        }
+
+        // Tambahkan animasi fadeOut
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+                    @keyframes fadeOut {
+                        from { opacity: 1; transform: translateX(-50%) translateY(0); }
+                        to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                    }
+                `;
+        document.head.appendChild(styleSheet);
+
+        // Tutup popup jika klik di luar area popup
+        document.getElementById('overlayHasil').addEventListener('click', function(e) {
+            if (e.target === this) {
+                tutupPopup();
+            }
+        });
+
+        // Keyboard shortcut: Escape untuk tutup popup
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('overlayHasil');
+                if (!overlay.classList.contains('hidden')) {
+                    tutupPopup();
+                }
+            }
+            // Enter untuk cek nilai
+            if (e.key === 'Enter' && !document.getElementById('overlayHasil').classList.contains('hidden')) {
+                // Jika popup terbuka, Enter bisa untuk ulangi
+            }
+        });
+
+        console.log('📚 LKPD Pengantar Ilmu Ekonomi siap!');
+        console.log('✅ Klik "Cek Nilai" setelah menjawab semua soal.');
+        console.log('💡 Tips: Jawab semua 3 soal dulu ya!');
+    </script>
+</body>
+</html>
